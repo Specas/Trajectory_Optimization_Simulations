@@ -6,7 +6,6 @@ function [q_traj, u_traj, lambda] = directShootingDubin(q_start, q_end, u_traj, 
 N = size(u_traj, 2);
 q_traj = zeros(3, N + 1);
 q_traj(:, 1) = q_start;
-q_traj(:, end) = q_end;
 
 %Parameters for instantaneous cost
 Q = [2, 0, 0; 0, 2, 0; 0, 0, 0];
