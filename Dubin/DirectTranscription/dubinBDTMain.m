@@ -55,34 +55,28 @@ end
 plotCar(a_start, b_start, theta_start, car_size, ax);
 % plotObstaclesCircle(circular_obstacle_coords, ax);
 
-
-
-xu_sol = doDT(x_start, x_end, v, N, dt);
+%Basis direct transcription
+xalpha_sol = doBDT(x_start, x_end, v, N, dt);
 
 fprintf('Initial position solution:\n');
-disp(xu_sol(1:3));
+disp(xalpha_sol(1:3));
 fprintf('Final position solution:\n');
-disp(xu_sol(3*N-2:3*N));
+disp(xalpha_sol(3*N-2:3*N));
 
-%For some reason the starting starting is off by a big margin. The
-%subsequent configurations seem to make sense. 
-%TODO: figure out why the first 3 values of xu_sol are incorrect. Makeshift
-%solution for now (By overwriting the first three values by the desired
-%values)
-xu_sol(1:3) = x_start;
-
+xalpha_sol(1:3) = x_start;
 
 %Starting simulation
 fprintf('Press any key to start the simulation\n');
 pause;
+
 for n=1:N
     
     pause(dt);
     cla(ax);
     
-    a_curr = xu_sol(3*(n-1)+1);
-    b_curr = xu_sol(3*(n-1)+2);
-    theta_curr = xu_sol(3*(n-1)+3);
+    a_curr = xalpha_sol(3*n-2);
+    b_curr = xalpha_sol(3*n-1);
+    theta_curr = xalpha_sol(3*n);
     plotCar(a_curr, b_curr, theta_curr, car_size, ax);
 %     pause;
 %     plotObstaclesCircle(circular_obstacle_coords, ax);
