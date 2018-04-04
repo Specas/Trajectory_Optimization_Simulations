@@ -23,6 +23,17 @@ Aeq(5, 3*N-1) = 1;
 Aeq(6, 3*N) = 1;
 Beq = [x_start; x_end];
 
+%Setting limits on control inputs
+lb = -inf(4*N-1, 1);
+ub = inf(4*N-1, 1);
+
+u_lb_val = -0.02;
+u_ub_val = 0.02;
+for i=1:N-1
+    lb(3*N+i) = u_lb_val;
+    ub(3*N+i) = u_ub_val;
+end
+
 options = optimoptions('fmincon', 'MaxFunctionEvaluations', 10000);
 
-xu_sol = fmincon(obj_fun, xu_init, [], [], Aeq, Beq, [], [], nonlcon, options);
+xu_sol = fmincon(obj_fun, xu_init, [], [], Aeq, Beq, lb, ub, nonlcon, options);

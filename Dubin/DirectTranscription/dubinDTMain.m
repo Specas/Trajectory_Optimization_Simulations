@@ -29,13 +29,13 @@ x_start = [a_start; b_start; theta_start];
 x_end = [a_end; b_end; theta_end];
 
 %Velocity
-v = 1;
+v = 5;
 
 %Initializing number of steps in the trajectory
 N = 100;
 
 %Total time in seconds
-T = 2;
+T = 3;
 
 %Discrete time step
 dt = T/N;
