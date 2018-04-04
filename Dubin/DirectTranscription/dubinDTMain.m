@@ -31,11 +31,15 @@ x_end = [a_end; b_end; theta_end];
 %Velocity
 v = 5;
 
+%Size of the car (Basically the distance between the centroid of the
+%triangle to one of the vertices)
+car_size = 5;
+
 %Initializing number of steps in the trajectory
-N = 100;
+N = 150;
 
 %Total time in seconds
-T = 3;
+T = 1;
 
 %Discrete time step
 dt = T/N;
@@ -47,12 +51,24 @@ for i=1:size(circular_obs, 1)
 end
 
 [fig, ax] = initializeFigure2D('Dubin', 'GridOn', x_lim, y_lim);
-plotCar(a_start, b_start, theta_start, 5, ax);
+plotCar(a_start, b_start, theta_start, car_size, ax);
 % plotObstaclesCircle(circular_obstacle_coords, ax);
 
 %Plotting initial position
 
 xu_sol = doDT(x_start, x_end, v, N, dt);
+
+%For some reason the starting starting is off by a big margin. The
+%subsequent configurations seem to make sense. 
+%TODO: figure out why the first 3 values of xu_sol are incorrect. Makeshift
+%solution for now (By overwriting the first three values by the desired
+%values)
+xu_sol(1:3) = x_start;
+
+fprintf('Initial position solution:\n');
+disp(xu_sol(1:3));
+fprintf('Final position solution:\n');
+disp(xu_sol(3*N-2:3*N));
 
 %Starting simulation
 fprintf('Press any key to start the simulation\n');
@@ -65,7 +81,8 @@ for n=1:N
     a_curr = xu_sol(3*(n-1)+1);
     b_curr = xu_sol(3*(n-1)+2);
     theta_curr = xu_sol(3*(n-1)+3);
-    plotCar(a_curr, b_curr, theta_curr, 5, ax);
+    plotCar(a_curr, b_curr, theta_curr, car_size, ax);
+%     pause;
 %     plotObstaclesCircle(circular_obstacle_coords, ax);
 end
 
